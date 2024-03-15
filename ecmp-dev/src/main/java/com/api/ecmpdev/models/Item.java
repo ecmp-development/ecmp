@@ -2,14 +2,15 @@ package com.api.ecmpdev.models;
 
 import com.api.ecmpdev.enums.Types;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
+import java.sql.Blob;
 
 @Getter
 @Setter
 @ToString
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
 @Table(name = "items")
@@ -17,7 +18,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -25,4 +26,11 @@ public class Item {
     private Types type;
 
     private int quantity;
+
+    private String description;
+
+    @Lob
+    private Blob image;
+
+    private double price;
 }
