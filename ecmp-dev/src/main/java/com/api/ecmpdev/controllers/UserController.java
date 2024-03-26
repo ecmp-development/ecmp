@@ -1,5 +1,6 @@
 package com.api.ecmpdev.controllers;
 
+import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
 import com.api.ecmpdev.models.User;
@@ -24,9 +25,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("create")
-    public HttpStatusCode createUser(@RequestBody RequestCreateUser user) {
-        return userService.createNewUser(user);
+    @PostMapping("create")
+    public HttpStatusCode createUser(@RequestBody RequestCreateUser payload) {
+        return userService.createNewUser(payload);
+    }
+
+    @PutMapping("update/password")
+    public HttpStatusCode changePassword(@RequestBody RequestChangePassword payload) {
+        return userService.changePassword(payload);
     }
 
     @GetMapping("email/{email}")
@@ -34,8 +40,8 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-   @GetMapping("id/{id}")
-   public Optional<ResponseUser> getUserById(@PathVariable Long id) {
+    @GetMapping("id/{id}")
+    public Optional<ResponseUser> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
    }
 }
