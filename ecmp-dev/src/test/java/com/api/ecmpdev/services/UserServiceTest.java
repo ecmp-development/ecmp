@@ -8,8 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @RequiredArgsConstructor
 class UserServiceTest {
