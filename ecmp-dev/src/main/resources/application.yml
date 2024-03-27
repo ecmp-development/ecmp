@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: ecmp-admin
-    password: E8GSiy513zyMy9d?F1jf
+    password: ${{ secrets.POSTGRES_DB_PASS }}
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:
