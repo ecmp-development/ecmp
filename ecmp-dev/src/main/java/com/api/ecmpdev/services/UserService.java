@@ -1,5 +1,6 @@
 package com.api.ecmpdev.services;
 
+import com.api.ecmpdev.dtos.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
@@ -94,6 +95,17 @@ public class UserService {
         if (encoder.matches(changedPassword.getOldPassword(), user.getPassword())) {
             userRepository.insertNewPassword(user.getId(), encoder.encode(changedPassword.getNewPassword()));
             return HttpStatus.ACCEPTED;
-        } else return HttpStatus.BAD_REQUEST;
+        } else return HttpStatus.UNAUTHORIZED;
+    }
+
+    public HttpStatusCode removeUser(RequestAuthId userData) {
+
+        User user = userRepository.findById(userData.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User with ID does not exist. ID: " + userData.getId()));
+
+        if (encoder.matches(userData.getPassword(), user.getPassword())) {
+            userRepository.deleteById(userData.getId());
+            return HttpStatus.OK;
+        } else return HttpStatus.UNAUTHORIZED;
     }
 }
