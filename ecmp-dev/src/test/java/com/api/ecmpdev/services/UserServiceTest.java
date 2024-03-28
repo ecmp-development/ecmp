@@ -11,11 +11,13 @@ import com.api.ecmpdev.models.Item;
 import com.api.ecmpdev.models.Order;
 import com.api.ecmpdev.models.User;
 import com.api.ecmpdev.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -108,6 +110,13 @@ class UserServiceTest extends AbstractContainerBaseTest {
         }
 
         @Test
+        void shouldReturnErrorMessageWhenNotFoundWithId() {
+            long id = 3L;
+            Exception exception = assertThrows(EntityNotFoundException.class, () -> userService.getUserById(id));
+            assertEquals("User with ID does not exist. ID: " + id, exception.getMessage());
+        }
+
+        @Test
         void shouldReturnTestUserWithSpecifiedEmail() {
             String expected = Optional.of(
                     ResponseUser.builder()
@@ -120,6 +129,13 @@ class UserServiceTest extends AbstractContainerBaseTest {
             String actual = userService.getUserByEmail(testUser.getEmail()).toString();
 
             assertEquals(expected, actual);
+        }
+
+        @Test
+        void shouldReturnErrorMessageWhenNotFoundWithEmail() {
+            String email = "testEmail123@mail.test";
+            Exception exception = assertThrows(EntityNotFoundException.class, () -> userService.getUserByEmail(email));
+            assertEquals("User with email does not exist. Email: " + email, exception.getMessage());
         }
     }
 
@@ -208,7 +224,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
         }
 
         @Test
-        void shouldReturnUnauthorizedWhenPasswordIsWrong() {
+        void shouldReturnUnauthorizedWhenPasswordIsWrongForChange() {
             RequestChangePassword testData = RequestChangePassword.builder()
                     .email("customerTest@mail.test")
                     .oldPassword("111")
@@ -222,6 +238,19 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
             assertEquals(expectedStatus, actualStatus);
             assertFalse(expected);
+        }
+
+        @Test
+        void shouldReturnExceptionWhenUserNotFoundForPasswordChange() {
+            RequestChangePassword testData = RequestChangePassword.builder()
+                    .email("testEmail22@mail.test")
+                    .oldPassword("111")
+                    .newPassword("321")
+                    .build();
+
+            Exception exception = assertThrows(EntityNotFoundException.class,  () -> userService.changePassword(testData));
+
+            assertEquals("User with email does not exist. Email: " + testData.getEmail(), exception.getMessage());
         }
 
     }
@@ -243,6 +272,33 @@ class UserServiceTest extends AbstractContainerBaseTest {
             assertEquals(expected, actual);
             assertTrue(userRepository.findById(testUser.getId()).isEmpty());
 
+        }
+
+        @Test
+        void shouldReturnUnauthorizedWhenPasswordIsWrongForDelete() {
+            RequestAuthId testData = RequestAuthId.builder()
+                    .id(testUser.getId())
+                    .password("222")
+                    .build();
+
+            HttpStatusCode expectedStatus = HttpStatus.UNAUTHORIZED;
+            HttpStatusCode actualStatus = userService.removeUser(testData);
+
+            boolean expected = userRepository.existsById(testData.getId());
+
+            assertEquals(expectedStatus, actualStatus);
+            assertTrue(expected);
+        }
+
+        @Test
+        void shouldReturnErrorMessageWhenNotFoundWithIdAtRemoval() {
+            RequestAuthId testData = RequestAuthId.builder()
+                    .id(3L)
+                    .password("123")
+                    .build();
+
+            Exception exception = assertThrows(EntityNotFoundException.class, () -> userService.removeUser(testData));
+            assertEquals("User with ID does not exist. ID: " + testData.getId(), exception.getMessage());
         }
 
     }

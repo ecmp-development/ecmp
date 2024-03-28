@@ -1,5 +1,6 @@
 package com.api.ecmpdev.services;
 
+import com.api.ecmpdev.configs.Messages;
 import com.api.ecmpdev.dtos.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
@@ -37,7 +38,7 @@ public class UserService {
 
     public Optional<ResponseUser> getUserById(Long id) {
         Optional<User> user = Optional.of(userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User with id not found. ID: " + id)));
+                .orElseThrow(() -> new EntityNotFoundException(Messages.idNotFound(id))));
         return user.map(value ->
                 ResponseUser.builder()
                         .name(value.getName())
@@ -49,7 +50,7 @@ public class UserService {
 
     public Optional<ResponseUser> getUserByEmail(String email) {
         Optional<User> user = Optional.of(userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("User with email not found. Email: " + email)));
+                .orElseThrow(() -> new EntityNotFoundException(Messages.emailNotFound(email))));
         return user.map(value ->
                 ResponseUser.builder()
                         .name(value.getName())
@@ -90,7 +91,7 @@ public class UserService {
     public HttpStatusCode changePassword(RequestChangePassword changedPassword) {
 
         User user = userRepository.findByEmail(changedPassword.getEmail())
-                .orElseThrow(() -> new EntityNotFoundException("Email does not exist. Email: " + changedPassword.getEmail()));
+                .orElseThrow(() -> new EntityNotFoundException(Messages.emailNotFound(changedPassword.getEmail())));
 
         if (encoder.matches(changedPassword.getOldPassword(), user.getPassword())) {
             userRepository.insertNewPassword(user.getId(), encoder.encode(changedPassword.getNewPassword()));
@@ -101,7 +102,7 @@ public class UserService {
     public HttpStatusCode removeUser(RequestAuthId userData) {
 
         User user = userRepository.findById(userData.getId())
-                .orElseThrow(() -> new EntityNotFoundException("User with ID does not exist. ID: " + userData.getId()));
+                .orElseThrow(() -> new EntityNotFoundException(Messages.idNotFound(userData.getId())));
 
         if (encoder.matches(userData.getPassword(), user.getPassword())) {
             userRepository.deleteById(userData.getId());
