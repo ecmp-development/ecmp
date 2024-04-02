@@ -5,6 +5,7 @@ import com.api.ecmpdev.dtos.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
+import com.api.ecmpdev.dtos.mappers.ResponseUserMapper;
 import com.api.ecmpdev.models.User;
 import com.api.ecmpdev.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,48 +17,45 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final ResponseUserMapper responseUserMapper;
 
     @Autowired
     public UserService(
             UserRepository userRepository,
-            PasswordEncoder encoder) {
+            PasswordEncoder encoder,
+            ResponseUserMapper responseUserMapper) {
         this.userRepository = userRepository;
         this.encoder = encoder;
+        this.responseUserMapper = responseUserMapper;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<ResponseUser> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(responseUserMapper)
+                .collect(Collectors.toList());
     }
 
-    public Optional<ResponseUser> getUserById(Long id) {
-        Optional<User> user = Optional.of(userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(Messages.idNotFound(id))));
-        return user.map(value ->
-                ResponseUser.builder()
-                        .name(value.getName())
-                        .firstname(value.getFirstname())
-                        .email(value.getEmail())
-                        .role(value.getRole())
-                .build());
+    public ResponseUser getUserById(Long id) {
+        return userRepository.findById(id)
+                .map(responseUserMapper)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        Messages.userIdNotFound(id)
+                ));
     }
 
-    public Optional<ResponseUser> getUserByEmail(String email) {
-        Optional<User> user = Optional.of(userRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException(Messages.emailNotFound(email))));
-        return user.map(value ->
-                ResponseUser.builder()
-                        .name(value.getName())
-                        .firstname(value.getFirstname())
-                        .email(value.getEmail())
-                        .role(value.getRole())
-                .build());
+    public ResponseUser getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(responseUserMapper)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        Messages.userEmailNotFound(email)));
     }
 
     public HttpStatusCode createNewUser(RequestCreateUser user) {
@@ -91,7 +89,7 @@ public class UserService {
     public HttpStatusCode changePassword(RequestChangePassword changedPassword) {
 
         User user = userRepository.findByEmail(changedPassword.getEmail())
-                .orElseThrow(() -> new EntityNotFoundException(Messages.emailNotFound(changedPassword.getEmail())));
+                .orElseThrow(() -> new EntityNotFoundException(Messages.userEmailNotFound(changedPassword.getEmail())));
 
         if (encoder.matches(changedPassword.getOldPassword(), user.getPassword())) {
             userRepository.insertNewPassword(user.getId(), encoder.encode(changedPassword.getNewPassword()));
@@ -102,7 +100,7 @@ public class UserService {
     public HttpStatusCode removeUser(RequestAuthId userData) {
 
         User user = userRepository.findById(userData.getId())
-                .orElseThrow(() -> new EntityNotFoundException(Messages.idNotFound(userData.getId())));
+                .orElseThrow(() -> new EntityNotFoundException(Messages.userIdNotFound(userData.getId())));
 
         if (encoder.matches(userData.getPassword(), user.getPassword())) {
             userRepository.deleteById(userData.getId());

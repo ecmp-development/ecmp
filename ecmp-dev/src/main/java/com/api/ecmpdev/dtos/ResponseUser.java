@@ -1,22 +1,12 @@
 package com.api.ecmpdev.dtos;
 
-import com.api.ecmpdev.enums.Roles;
-import com.api.ecmpdev.models.Order;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.List;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class ResponseUser {
-    private String name;
-    private String firstname;
-    private String email;
-    @Enumerated(EnumType.STRING)
-    private Roles role;
+public record ResponseUser(
+        String name,
+        String firstname,
+        String email,
+        List<String> role
+) {
+
 }

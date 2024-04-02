@@ -16,37 +16,37 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users/")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("all")
-    public List<User> getAll() {
+    @GetMapping("")
+    public List<ResponseUser> getAll() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("id/{id}")
-    public Optional<ResponseUser> getUserById(@PathVariable Long id) {
+    @GetMapping("/id/{id}")
+    public ResponseUser getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
-    @GetMapping("email/{email}")
-    public Optional<ResponseUser> getUserByEmail(@PathVariable String email) {
+    @GetMapping("/email/{email}")
+    public ResponseUser getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email);
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public HttpStatusCode createUser(@RequestBody RequestCreateUser payload) {
         return userService.createNewUser(payload);
     }
 
-    @PutMapping("update/password")
+    @PutMapping("/update/password")
     public HttpStatusCode changePassword(@RequestBody RequestChangePassword payload) {
         return userService.changePassword(payload);
     }
 
-    @DeleteMapping("remove")
+    @DeleteMapping("/remove")
     public HttpStatusCode removeUser(@RequestBody RequestAuthId payload) {
         return userService.removeUser(payload);
     }

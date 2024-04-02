@@ -5,6 +5,7 @@ import com.api.ecmpdev.dtos.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
+import com.api.ecmpdev.dtos.mappers.ResponseUserMapper;
 import com.api.ecmpdev.enums.Roles;
 import com.api.ecmpdev.enums.Types;
 import com.api.ecmpdev.models.Item;
@@ -17,13 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,6 +36,8 @@ class UserServiceTest extends AbstractContainerBaseTest {
     UserService userService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    ResponseUserMapper responseUserMapper;
     @Autowired
     PasswordEncoder encoder;
 
@@ -88,21 +92,43 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
         @Test
         void shouldReturnAllUsersInDatabase() {
-            String expected = List.of(testUser, testUser2).toString();
+            String expected = List.of(
+                    new ResponseUser(
+                            testUser.getName(),
+                            testUser.getFirstname(),
+                            testUser.getEmail(),
+                            testUser.getAuthorities()
+                                    .stream()
+                                    .map(GrantedAuthority::getAuthority)
+                                    .collect(Collectors.toList())),
+                    new ResponseUser(
+                            testUser2.getName(),
+                            testUser2.getFirstname(),
+                            testUser2.getEmail(),
+                            testUser2.getAuthorities()
+                                    .stream()
+                                    .map(GrantedAuthority::getAuthority)
+                                    .collect(Collectors.toList())
+                    )
+            ).toString();
             String actual = userService.getAllUsers().toString();
 
             assertEquals(expected, actual);
+            assertEquals(2, userService.getAllUsers().size());
         }
 
         @Test
         void shouldReturnUserWithSpecifiedId() {
-            String expected = Optional.of(
-                    ResponseUser.builder()
-                            .name(testUser2.getName())
-                            .firstname(testUser2.getFirstname())
-                            .email(testUser2.getEmail())
-                            .role(testUser2.getRole())
-                            .build()).toString();
+            String expected = new ResponseUser(
+                    testUser2.getName(),
+                    testUser2.getFirstname(),
+                    testUser2.getEmail(),
+                    testUser2.getAuthorities()
+                            .stream()
+                            .map(GrantedAuthority::getAuthority)
+                            .collect(Collectors.toList())
+            ).toString();
+
 
             String actual = userService.getUserById(testUser2.getId()).toString();
 
@@ -118,13 +144,15 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
         @Test
         void shouldReturnTestUserWithSpecifiedEmail() {
-            String expected = Optional.of(
-                    ResponseUser.builder()
-                            .name(testUser.getName())
-                            .firstname(testUser.getFirstname())
-                            .email(testUser.getEmail())
-                            .role(testUser.getRole())
-                            .build()).toString();
+            String expected = new ResponseUser(
+                    testUser.getName(),
+                    testUser.getFirstname(),
+                    testUser.getEmail(),
+                    testUser.getAuthorities()
+                            .stream()
+                            .map(GrantedAuthority::getAuthority)
+                            .collect(Collectors.toList())
+            ).toString();
 
             String actual = userService.getUserByEmail(testUser.getEmail()).toString();
 
@@ -248,7 +276,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
                     .newPassword("321")
                     .build();
 
-            Exception exception = assertThrows(EntityNotFoundException.class,  () -> userService.changePassword(testData));
+            Exception exception = assertThrows(EntityNotFoundException.class, () -> userService.changePassword(testData));
 
             assertEquals("User with email does not exist. Email: " + testData.getEmail(), exception.getMessage());
         }
@@ -261,10 +289,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
         @Test
         void shouldDeleteUserSpecifiedId() {
-            RequestAuthId testData = RequestAuthId.builder()
-                    .id(testUser.getId())
-                    .password("123")
-                    .build();
+            RequestAuthId testData = new RequestAuthId(testUser.getId(), "123");
 
             HttpStatusCode expected = HttpStatus.OK;
             HttpStatusCode actual = userService.removeUser(testData);
@@ -276,10 +301,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
         @Test
         void shouldReturnUnauthorizedWhenPasswordIsWrongForDelete() {
-            RequestAuthId testData = RequestAuthId.builder()
-                    .id(testUser.getId())
-                    .password("222")
-                    .build();
+            RequestAuthId testData = new RequestAuthId(testUser.getId(), "222");
 
             HttpStatusCode expectedStatus = HttpStatus.UNAUTHORIZED;
             HttpStatusCode actualStatus = userService.removeUser(testData);
@@ -292,10 +314,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
         @Test
         void shouldReturnErrorMessageWhenNotFoundWithIdAtRemoval() {
-            RequestAuthId testData = RequestAuthId.builder()
-                    .id(3L)
-                    .password("123")
-                    .build();
+            RequestAuthId testData = new RequestAuthId(3L, "123");
 
             Exception exception = assertThrows(EntityNotFoundException.class, () -> userService.removeUser(testData));
             assertEquals("User with ID does not exist. ID: " + testData.getId(), exception.getMessage());
