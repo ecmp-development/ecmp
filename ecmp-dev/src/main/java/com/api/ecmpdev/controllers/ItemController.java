@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,5 +30,10 @@ public class ItemController {
     @PostMapping("/create")
     public HttpStatusCode createItem(@RequestBody RequestCreateItem payload) {
         return itemService.createItem(payload);
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public HttpStatusCode deleteItem(@PathVariable Long id) {
+        return itemService.deleteItem(id);
     }
 }

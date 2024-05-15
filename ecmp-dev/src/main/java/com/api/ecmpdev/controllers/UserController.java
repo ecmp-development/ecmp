@@ -4,11 +4,9 @@ import com.api.ecmpdev.dtos.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
-import com.api.ecmpdev.models.User;
 import com.api.ecmpdev.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/id/{id}")
-    public ResponseUser getUserById(@PathVariable Long id) {
+    public Optional<ResponseUser> getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 

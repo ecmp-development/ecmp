@@ -45,7 +45,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
     User testUser2;
 
     @BeforeEach
-    void createTestData() {
+    void setUp() {
         Item item1 = Item.builder()
                 .name("testItem")
                 .type(Types.ACCESSORIES)
@@ -119,7 +119,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
         @Test
         void shouldReturnUserWithSpecifiedId() {
-            String expected = new ResponseUser(
+            String expected = Optional.of(new ResponseUser(
                     testUser2.getName(),
                     testUser2.getFirstname(),
                     testUser2.getEmail(),
@@ -127,7 +127,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
                             .stream()
                             .map(GrantedAuthority::getAuthority)
                             .collect(Collectors.toList())
-            ).toString();
+            )).toString();
 
 
             String actual = userService.getUserById(testUser2.getId()).toString();
@@ -222,7 +222,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
             HttpStatusCode expectedStatus = HttpStatus.CONFLICT;
             HttpStatusCode actualStatus = userService.createNewUser(createUser);
 
-            boolean expected = encoder.matches(createUser.getPassword(), userRepository.findByEmail(createUser.getEmail()).get().getPassword());
+            boolean expected = encoder.matches(createUser.getPassword(), userRepository.findByEmail(createUser.getEmail()).orElseThrow().getPassword());
 
             assertEquals(expectedStatus, actualStatus);
             assertFalse(expected);
@@ -245,7 +245,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
             HttpStatusCode expectedStatus = HttpStatus.ACCEPTED;
             HttpStatusCode actualStatus = userService.changePassword(testData);
 
-            boolean expected = encoder.matches("321", userRepository.findByEmail(testData.getEmail()).get().getPassword());
+            boolean expected = encoder.matches("321", userRepository.findByEmail(testData.getEmail()).orElseThrow().getPassword());
 
             assertEquals(expectedStatus, actualStatus);
             assertTrue(expected);
@@ -262,7 +262,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
             HttpStatusCode expectedStatus = HttpStatus.UNAUTHORIZED;
             HttpStatusCode actualStatus = userService.changePassword(testData);
 
-            boolean expected = encoder.matches("321", userRepository.findByEmail(testData.getEmail()).get().getPassword());
+            boolean expected = encoder.matches("321", userRepository.findByEmail(testData.getEmail()).orElseThrow().getPassword());
 
             assertEquals(expectedStatus, actualStatus);
             assertFalse(expected);
@@ -324,7 +324,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
 
     @AfterEach
     @Transactional
-    void clearTestData() {
+    void tearDown() {
         userRepository.deleteAll();
     }
 }

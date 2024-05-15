@@ -22,6 +22,6 @@ public class RequestCreateItem {
     private Types type;
     private String description;
     @Lob
-    private Blob image;
+    private byte[] image;
     private double price;
 }

@@ -30,7 +30,7 @@ public class Item {
     private String description;
 
     @Lob
-    private Blob image;
+    private byte[] image;
 
     private double price;
 }

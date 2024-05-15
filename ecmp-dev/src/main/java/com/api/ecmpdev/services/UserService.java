@@ -6,6 +6,7 @@ import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
 import com.api.ecmpdev.dtos.mappers.ResponseUserMapper;
+import com.api.ecmpdev.models.Order;
 import com.api.ecmpdev.models.User;
 import com.api.ecmpdev.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,12 +45,12 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseUser getUserById(Long id) {
-        return userRepository.findById(id)
+    public Optional<ResponseUser> getUserById(Long id) {
+        return Optional.of(userRepository.findById(id)
                 .map(responseUserMapper)
                 .orElseThrow(() -> new EntityNotFoundException(
                         Messages.userIdNotFound(id)
-                ));
+                )));
     }
 
     public ResponseUser getUserByEmail(String email) {
