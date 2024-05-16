@@ -1,12 +1,16 @@
 package com.api.ecmpdev.controllers;
 
-import com.api.ecmpdev.dtos.RequestAuthId;
+import com.api.ecmpdev.dtos.RequestChangeEmail;
+import com.api.ecmpdev.dtos.auth.RequestAuthEmail;
+import com.api.ecmpdev.dtos.auth.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
 import com.api.ecmpdev.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,17 +39,27 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public HttpStatusCode createUser(@RequestBody RequestCreateUser payload) {
+    public ResponseEntity<String> createUser(@RequestBody RequestCreateUser payload) {
         return userService.createNewUser(payload);
     }
 
+    @PutMapping("/update/email")
+    public ResponseEntity<String> changeEmail(@RequestBody RequestChangeEmail payload) {
+        return userService.changeEmail(payload);
+    }
+
     @PutMapping("/update/password")
-    public HttpStatusCode changePassword(@RequestBody RequestChangePassword payload) {
+    public ResponseEntity<String> changePassword(@RequestBody RequestChangePassword payload) {
         return userService.changePassword(payload);
     }
 
-    @DeleteMapping("/remove")
-    public HttpStatusCode removeUser(@RequestBody RequestAuthId payload) {
-        return userService.removeUser(payload);
+    @DeleteMapping("/removeId")
+    public ResponseEntity<String> removeUserById(@RequestBody RequestAuthId payload) {
+        return userService.removeUserById(payload);
+    }
+
+    @DeleteMapping("/removeEmail")
+    public ResponseEntity<String> removeUserByEmail(@RequestBody RequestAuthEmail payload) {
+        return userService.removeUserByEmail(payload);
     }
 }

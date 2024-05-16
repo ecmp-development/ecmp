@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestItem {
+public class FilterItem {
     private Long id;
     private String name;
     @Enumerated(EnumType.STRING)

@@ -1,4 +1,4 @@
-package com.api.ecmpdev.dtos;
+package com.api.ecmpdev.dtos.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

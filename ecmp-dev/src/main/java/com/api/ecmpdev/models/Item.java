@@ -29,7 +29,6 @@ public class Item {
 
     private String description;
 
-    @Lob
     private byte[] image;
 
     private double price;

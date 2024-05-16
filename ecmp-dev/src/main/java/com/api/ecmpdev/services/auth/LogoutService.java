@@ -1,4 +1,4 @@
-package com.api.ecmpdev.services;
+package com.api.ecmpdev.services.auth;
 
 import com.api.ecmpdev.repositories.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;

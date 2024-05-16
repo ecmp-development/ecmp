@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseAuthentication {
-
-    private String token;
+public class RequestChangeEmail {
+    private String oldEmail;
+    private String newEmail;
+    private String password;
 }

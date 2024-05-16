@@ -1,8 +1,8 @@
-package com.api.ecmpdev.services;
+package com.api.ecmpdev.services.auth;
 
-import com.api.ecmpdev.dtos.RequestAuthentication;
-import com.api.ecmpdev.dtos.RequestRegister;
-import com.api.ecmpdev.dtos.ResponseAuthentication;
+import com.api.ecmpdev.dtos.auth.RequestAuthentication;
+import com.api.ecmpdev.dtos.auth.RequestRegister;
+import com.api.ecmpdev.dtos.auth.ResponseAuthentication;
 import com.api.ecmpdev.enums.Roles;
 import com.api.ecmpdev.enums.Tokens;
 import com.api.ecmpdev.models.Token;
@@ -27,24 +27,27 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public ResponseAuthentication register(RequestRegister request) {
-        var user = User.builder()
-                .firstname(request.getFirstname())
-                .name(request.getName())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Roles.CUSTOMER)
-                .build();
-        var savedUser = userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        saveUserToken(savedUser, jwtToken);
-        return ResponseAuthentication.builder()
-                .token(jwtToken)
-                .build();
+        if (!userRepository.existsByEmail(request.getEmail())) {
+            var user = User.builder()
+                    .firstname(request.getFirstname())
+                    .name(request.getName())
+                    .email(request.getEmail())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(Roles.CUSTOMER)
+                    .build();
+            var savedUser = userRepository.save(user);
+            var jwtToken = jwtService.generateToken(user);
+            saveUserToken(savedUser, jwtToken);
+            return ResponseAuthentication.builder()
+                    .token(jwtToken)
+                    .build();
+        } else return ResponseAuthentication.builder().token("Failed Request").build();
+
     }
 
-    private void saveUserToken(User userModel, String jwtToken) {
+    private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder()
-                .user(userModel)
+                .user(user)
                 .token(jwtToken)
                 .type(Tokens.BEARER)
                 .expired(false)

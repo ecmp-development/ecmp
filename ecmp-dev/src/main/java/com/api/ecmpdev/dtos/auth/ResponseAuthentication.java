@@ -1,4 +1,4 @@
-package com.api.ecmpdev.dtos;
+package com.api.ecmpdev.dtos.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RequestAuthentication {
+public class ResponseAuthentication {
 
-    private String email;
-    String password;
+    private String token;
 }

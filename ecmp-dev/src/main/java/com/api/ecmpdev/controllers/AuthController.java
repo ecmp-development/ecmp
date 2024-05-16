@@ -1,9 +1,9 @@
 package com.api.ecmpdev.controllers;
 
-import com.api.ecmpdev.dtos.RequestAuthentication;
-import com.api.ecmpdev.dtos.RequestRegister;
-import com.api.ecmpdev.dtos.ResponseAuthentication;
-import com.api.ecmpdev.services.AuthService;
+import com.api.ecmpdev.dtos.auth.RequestAuthentication;
+import com.api.ecmpdev.dtos.auth.RequestRegister;
+import com.api.ecmpdev.dtos.auth.ResponseAuthentication;
+import com.api.ecmpdev.services.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

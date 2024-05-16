@@ -1,7 +1,7 @@
 package com.api.ecmpdev.configs;
 
 import com.api.ecmpdev.repositories.TokenRepository;
-import com.api.ecmpdev.services.JwtService;
+import com.api.ecmpdev.services.auth.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.api.ecmpdev.services;
+package com.api.ecmpdev.services.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
