@@ -4,8 +4,6 @@ import com.api.ecmpdev.enums.Types;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Blob;
-
 @Getter
 @Setter
 @ToString

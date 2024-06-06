@@ -4,11 +4,11 @@ import com.api.ecmpdev.AbstractContainerBaseTest;
 import com.api.ecmpdev.configs.exceptions.UserEmailNotFoundException;
 import com.api.ecmpdev.configs.exceptions.UserIdNotFoundException;
 import com.api.ecmpdev.dtos.RequestChangeEmail;
-import com.api.ecmpdev.dtos.auth.RequestAuthEmail;
-import com.api.ecmpdev.dtos.auth.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
+import com.api.ecmpdev.dtos.auth.RequestAuthEmail;
+import com.api.ecmpdev.dtos.auth.RequestAuthId;
 import com.api.ecmpdev.dtos.mappers.ResponseUserMapper;
 import com.api.ecmpdev.enums.Roles;
 import com.api.ecmpdev.enums.Types;
@@ -21,14 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,7 +62,11 @@ class UserServiceTest extends AbstractContainerBaseTest {
                 .email("customerTest@mail.test")
                 .password(encoder.encode("123"))
                 .role(Roles.CUSTOMER)
-                .order(null)
+                .order(List.of(Order.builder()
+                        .item(List.of(item1))
+                        .user(testUser)
+                        .date(new Date())
+                        .build()))
                 .build();
 
         testUser2 = User.builder()
@@ -75,15 +77,6 @@ class UserServiceTest extends AbstractContainerBaseTest {
                 .role(Roles.ADMIN)
                 .order(null)
                 .build();
-
-        Order order = Order.builder()
-                .item(List.of(item1))
-                .user(testUser)
-                .date(new Date())
-                .build();
-
-        order.setItem(List.of(item1));
-        testUser.setOrder(List.of(order, order));
 
         userRepository.save(testUser);
         userRepository.save(testUser2);
@@ -100,19 +93,12 @@ class UserServiceTest extends AbstractContainerBaseTest {
                             testUser.getName(),
                             testUser.getFirstname(),
                             testUser.getEmail(),
-                            testUser.getAuthorities()
-                                    .stream()
-                                    .map(GrantedAuthority::getAuthority)
-                                    .collect(Collectors.toList())),
+                            testUser.getRole()),
                     new ResponseUser(
                             testUser2.getName(),
                             testUser2.getFirstname(),
                             testUser2.getEmail(),
-                            testUser2.getAuthorities()
-                                    .stream()
-                                    .map(GrantedAuthority::getAuthority)
-                                    .collect(Collectors.toList())
-                    )
+                            testUser2.getRole())
             ).toString();
             String actual = userService.getAllUsers().toString();
 
@@ -126,11 +112,8 @@ class UserServiceTest extends AbstractContainerBaseTest {
                     testUser2.getName(),
                     testUser2.getFirstname(),
                     testUser2.getEmail(),
-                    testUser2.getAuthorities()
-                            .stream()
-                            .map(GrantedAuthority::getAuthority)
-                            .collect(Collectors.toList())
-            )).toString();
+                    testUser2.getRole())
+            ).toString();
 
 
             String actual = userService.getUserById(testUser2.getId()).toString();
@@ -151,10 +134,7 @@ class UserServiceTest extends AbstractContainerBaseTest {
                     testUser.getName(),
                     testUser.getFirstname(),
                     testUser.getEmail(),
-                    testUser.getAuthorities()
-                            .stream()
-                            .map(GrantedAuthority::getAuthority)
-                            .collect(Collectors.toList())
+                    testUser.getRole()
             ).toString();
 
             String actual = userService.getUserByEmail(testUser.getEmail()).toString();

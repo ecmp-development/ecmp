@@ -1,12 +1,12 @@
 package com.api.ecmpdev.dtos;
 
-import java.util.List;
+import com.api.ecmpdev.enums.Roles;
 
 public record ResponseUser(
         String name,
         String firstname,
         String email,
-        List<String> role
+        Roles role
 ) {
 
 }
