@@ -3,8 +3,8 @@ spring:
     name: "ecmp-dev"
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
-    username: ${{ vars.POSTGRES_DB_USER }}
-    password: ${{ secrets.POSTGRES_DB_PASS }}
+    username: developer
+    password: postgres
     driverClassName: org.postgresql.Driver
   jpa:
     hibernate:

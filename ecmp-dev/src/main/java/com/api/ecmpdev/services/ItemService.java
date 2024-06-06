@@ -23,7 +23,9 @@ public class ItemService {
     private final ResponseItemMapper responseItemMapper;
 
     @Autowired
-    public ItemService(ItemRepository itemRepository, ResponseItemMapper responseItemMapper) {
+    public ItemService(
+            ItemRepository itemRepository,
+            ResponseItemMapper responseItemMapper) {
         this.itemRepository = itemRepository;
         this.responseItemMapper = responseItemMapper;
     }
