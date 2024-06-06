@@ -19,3 +19,4 @@ spring:
 
 cors:
   allowedOrigins: http://localhost/,http://localhost:4200/
+
