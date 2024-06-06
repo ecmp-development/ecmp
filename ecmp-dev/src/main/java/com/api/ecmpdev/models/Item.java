@@ -4,8 +4,6 @@ import com.api.ecmpdev.enums.Types;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Blob;
-
 @Getter
 @Setter
 @ToString
@@ -29,8 +27,7 @@ public class Item {
 
     private String description;
 
-    @Lob
-    private Blob image;
+    private byte[] image;
 
     private double price;
 }

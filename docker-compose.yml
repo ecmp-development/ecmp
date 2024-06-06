@@ -3,13 +3,13 @@ services:
     image: postgres:16.0-alpine
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USER: ecmp-admin
-      POSTGRES_PASSWORD: E8GSiy513zyMy9d?F1jf
-      POSTGRES_ROOT_PASSWORD: E8GSiy513zyMy9d?F1jf
+      POSTGRES_USER: developer
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_ROOT_PASSWORD: postgres
     ports:
       - 5432:5432
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d postgres -U ecmp-admin" ]
+      test: [ "CMD-SHELL", "pg_isready -d postgres -U developer" ]
       interval: 5s
       retries: 3
     networks:

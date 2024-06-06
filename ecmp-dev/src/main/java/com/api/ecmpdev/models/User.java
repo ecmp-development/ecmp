@@ -1,7 +1,6 @@
 package com.api.ecmpdev.models;
 
 import com.api.ecmpdev.enums.Roles;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,7 +30,6 @@ public class User implements UserDetails {
 
     private String email;
 
-    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
