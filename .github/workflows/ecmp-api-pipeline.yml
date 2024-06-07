@@ -8,6 +8,7 @@ on:
       - testing/**
     paths:
       - ecmp-dev/**
+      - .github/workflows/**
       - 'docker-compose.yml'
   workflow_dispatch:
 

@@ -9,6 +9,7 @@ on:
     paths:
       - ecmp-dev/**
       - ecmp-frontend/**
+      - .github/workflows/**
       - 'docker-compose.yml'
   workflow_dispatch:
 
