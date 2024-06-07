@@ -129,12 +129,6 @@ jobs:
           cd ecmp-dev
           ./mvnw clean package
 
-      - name: Extract project version
-        id: extract_version
-        run: |
-          cd ecmp-dev
-          echo "VERSION=$(./mvnw -q -Dexec.executeable='echo' -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_OUTPUT
-
       - name: Login to Dockerhub
         uses: docker/login-action@v3
         with:
@@ -148,7 +142,4 @@ jobs:
           file: ecmp-dev/Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ecmp-dev:${{ steps.extract_version.outputs.VERSION }},${{ secrets.DOCKERHUB_USERNAME }}/ecmp-dev:latest
-          build-args: |
-            PROFILE=dev
-            APP_VERSION=${{ steps.extract_version.outputs.VERSION }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ecmp-dev:latest
