@@ -19,7 +19,7 @@ spring:
 application:
   security:
     jwt:
-      secret-key: <jwt-key-signature>
+      secret-key: <jwt_key_signature>
 
 cors:
   allowedOrigins: http://localhost/,http://localhost:4200/
