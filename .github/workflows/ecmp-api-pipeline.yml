@@ -41,6 +41,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Update variables
+        run: |
+          sed -i 's/<postgres-user>/${{ vars.POSTGRES_DB_USER }}/' src/main/resources/application.yml
+          sed -i 's/<postgres-password>/${{ secrets.POSTGRES_DB_PASS }}/' src/main/resources/application.yml
+          sed -i 's/<jwt-key-signature>/${{ secrets.JWT_KEY }}/' src/main/resources/application.yml
+
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
