@@ -11,14 +11,6 @@ on:
       - ecmp-frontend/**
       - 'docker-compose.yml'
   workflow_dispatch:
-  workflow_call:
-    secrets:
-      POSTGRES_DB_PASS:
-        description: 'Password of Database'
-        required: true
-      JWT_KEY:
-        description: 'Secret JWT key to sign Tokens'
-        required: true
 
 jobs:
   compile:
