@@ -48,9 +48,9 @@ jobs:
           DB_PASS: ${{ secrets.POSTGRES_DB_PASS }}
           JWT_KEY: ${{ secrets.JWT_KEY }}
         run: |
-          sed -i 's/<postgres_user>/$DB_USER/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<postgres_password>/$DB_PASS/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<jwt_key_signature>/$JWT_KEY/' ecmp-dev/src/main/resources/application.yml
+          sed -i 's/<postgres_user>/${{ env.DB_USER }}/' ecmp-dev/src/main/resources/application.yml
+          sed -i 's/<postgres_password>/${{ env.DB_PASS }}/' ecmp-dev/src/main/resources/application.yml
+          sed -i 's/<jwt_key_signature>/${{ env.JWT_KEY }}/' ecmp-dev/src/main/resources/application.yml
 
       - name: Setup JDK
         uses: actions/setup-java@v4
