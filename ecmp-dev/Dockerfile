@@ -1,7 +1,9 @@
 FROM amazoncorretto:17
 
-ARG JAR_FILE="ecmp-dev-0.0.1-SNAPSHOT.jar"
+ARG JAR_FILE="ecmp-dev-*.jar"
 
 COPY target/${JAR_FILE} /app/api.jar
+
+EXPOSE 8080
 
 ENTRYPOINT ["java","-jar", "/app/api.jar"]
