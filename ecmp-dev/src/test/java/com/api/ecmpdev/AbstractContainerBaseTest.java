@@ -11,8 +11,8 @@ public abstract class AbstractContainerBaseTest {
     static {
         postgresqlContainer = (PostgreSQLContainer) new PostgreSQLContainer("postgres:16.0-alpine")
                 .withDatabaseName("ecmp")
-                .withUsername("ecmp-admin")
-                .withPassword("E8GSiy513zyMy9d?F1jf")
+                .withUsername("developer")
+                .withPassword("postgres")
                 .withReuse(true)
                 .waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 1));
         postgresqlContainer.start();
