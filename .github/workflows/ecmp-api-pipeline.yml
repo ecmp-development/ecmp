@@ -11,7 +11,7 @@ on:
       - 'docker-compose.yml'
 jobs:
   compile:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: compile project
     steps:
       - name: Checkout code
@@ -31,7 +31,7 @@ jobs:
           -/mvnw clean compile
 
   unit-tests:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: Unit tests
     steps:
       - name: Checkout code
@@ -51,7 +51,7 @@ jobs:
           -/mvnw clean test
 
   build:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     name: build project
     needs: [compile, unit-tests]
     steps:
@@ -73,7 +73,7 @@ jobs:
 
   build-image:
     name: Build Docker image
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     needs: [build]
     steps:
       - name: Checkout code
