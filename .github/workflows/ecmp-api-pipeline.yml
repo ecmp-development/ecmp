@@ -51,7 +51,7 @@ jobs:
           fetch-depth: 0
 
       - name: Update variables
-        with:
+        env:
           DB_USER: ${{ vars.POSTGRES_DB_USER }}
           DB_PASS: ${{ secrets.POSTGRES_DB_PASS }}
           JWT_KEY: ${{ secrets.JWT_KEY }}
