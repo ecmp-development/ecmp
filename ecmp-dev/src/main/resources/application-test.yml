@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: "ecmp-dev"
+  datasource:
+    url: jdbc:postgresql://postgres:5432/postgres
+    username: <database_user>
+    password: <database_password>
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+        format_sql: true
+    show-sql: true
+    database: postgresql
+application:
+  security:
+    jwt:
+      secret-key: <jwt_key_signature>
+
+cors:
+  allowedOrigins: http://localhost/,http://localhost:4200/
