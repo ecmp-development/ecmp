@@ -2,7 +2,7 @@ spring:
   application:
     name: "ecmp-dev"
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: jdbc:postgresql://postgres:5432/postgres
     username: <database_user>
     password: <database_password>
     driverClassName: org.postgresql.Driver
@@ -16,6 +16,8 @@ spring:
         format_sql: true
     show-sql: true
     database: postgresql
+  profiles:
+    active: @activatedProperties@
 application:
   security:
     jwt:

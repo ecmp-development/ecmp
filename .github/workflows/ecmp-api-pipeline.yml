@@ -184,5 +184,7 @@ jobs:
           context: ecmp-dev
           file: ecmp-dev/Dockerfile
           push: true
-          platforms: linux/amd64
+          platforms: |
+            - linux/amd64
+            - linux/arm64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ecmp-api:latest
