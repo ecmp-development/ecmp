@@ -91,7 +91,7 @@ jobs:
         env:
           PROPS_DIR: "ecmp-dev/src/main/resources/application.yml"
         run: |
-          sed -i 's/<database_name>/postgres/' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_name>/test/' ${{ env.PROPS_DIR }}
           sed -i 's/<database_port>/${{ secrets.POSTGRES_DB_PORT }}/' ${{ env.PROPS_DIR }}
           sed -i 's/<database_table_name>/${{ secrets.POSTGRES_DB_TABLE_NAME }}/' ${{ env.PROPS_DIR }}
           sed -i 's/<active_profile>/${{ secrets.ACTIVE_PROFILE }}/' ${{ env.PROPS_DIR }}
