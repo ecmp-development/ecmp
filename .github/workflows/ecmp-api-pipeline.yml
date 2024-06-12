@@ -89,13 +89,17 @@ jobs:
 
       - name: Update variables
         env:
-          DB_USER: ${{ vars.POSTGRES_DB_USER }}
-          DB_PASS: ${{ secrets.POSTGRES_DB_PASS }}
-          JWT_KEY: ${{ secrets.JWT_KEY }}
+          PROPS_DIR: "ecmp-dev/src/main/resources/application.yml"
+
         run: |
-          sed -i 's/<database_user>/${{ env.DB_USER }}/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<database_password>/${{ env.DB_PASS }}/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<jwt_key_signature>/${{ env.JWT_KEY }}/' ecmp-dev/src/main/resources/application.yml
+          sed -i 's/<database_name>/${{ secrets.POSTGRES_DB_NAME }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_port>/${{ secrets.POSTGRES_DB_PORT }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_table_name>/${{ secrets.POSTGRES_DB_TABLE_NAME }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<active_profile>/${{ secrets.ACTIVE_PROFILE }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_user>/${{ secrets.POSTGRES_DB_USER }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_password>/${{ secrets.POSTGRES_DB_PASS }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<jwt_key_signature>/${{ secrets.JWT_KEY }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's@<allowed_origins>@${{ secrets.ALLOWED_ORIGINS }}@g' ${{ env.PROPS_DIR }}
 
       - name: Setup JDK
         uses: actions/setup-java@v4
@@ -121,13 +125,16 @@ jobs:
 
       - name: Update variables
         env:
-          DB_USER: ${{ vars.POSTGRES_DB_USER }}
-          DB_PASS: ${{ secrets.POSTGRES_DB_PASS }}
-          JWT_KEY: ${{ secrets.JWT_KEY }}
+          PROPS_DIR: "ecmp-dev/src/main/resources/application.yml"
         run: |
-          sed -i 's/<database_user>/${{ env.DB_USER }}/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<database_password>/${{ env.DB_PASS }}/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<jwt_key_signature>/${{ env.JWT_KEY }}/' ecmp-dev/src/main/resources/application.yml
+          sed -i 's/<database_name>/${{ secrets.POSTGRES_DB_NAME }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_port>/${{ secrets.POSTGRES_DB_PORT }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_table_name>/${{ secrets.POSTGRES_DB_TABLE_NAME }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<active_profile>/${{ secrets.ACTIVE_PROFILE }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_user>/${{ secrets.POSTGRES_DB_USER }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_password>/${{ secrets.POSTGRES_DB_PASS }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<jwt_key_signature>/${{ secrets.JWT_KEY }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's@<allowed_origins>@${{ secrets.ALLOWED_ORIGINS }}@g' ${{ env.PROPS_DIR }}
 
       - name: Setup JDK
         uses: actions/setup-java@v4
@@ -153,13 +160,16 @@ jobs:
 
       - name: Update variables
         env:
-          DB_USER: ${{ vars.POSTGRES_DB_USER }}
-          DB_PASS: ${{ secrets.POSTGRES_DB_PASS }}
-          JWT_KEY: ${{ secrets.JWT_KEY }}
+          PROPS_DIR: "ecmp-dev/src/main/resources/application.yml"
         run: |
-          sed -i 's/<database_user>/${{ env.DB_USER }}/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<database_password>/${{ env.DB_PASS }}/' ecmp-dev/src/main/resources/application.yml
-          sed -i 's/<jwt_key_signature>/${{ env.JWT_KEY }}/' ecmp-dev/src/main/resources/application.yml
+          sed -i 's/<database_name>/${{ secrets.POSTGRES_DB_NAME }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_port>/${{ secrets.POSTGRES_DB_PORT }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_table_name>/${{ secrets.POSTGRES_DB_TABLE_NAME }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<active_profile>/${{ secrets.ACTIVE_PROFILE }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_user>/${{ secrets.POSTGRES_DB_USER }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<database_password>/${{ secrets.POSTGRES_DB_PASS }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's/<jwt_key_signature>/${{ secrets.JWT_KEY }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's@<allowed_origins>@${{ secrets.ALLOWED_ORIGINS }}@g' ${{ env.PROPS_DIR }}
 
       - name: Setup JDK
         uses: actions/setup-java@v4
@@ -184,5 +194,4 @@ jobs:
           context: ecmp-dev
           file: ecmp-dev/Dockerfile
           push: true
-          platforms: linux/amd64
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ecmp-api:latest

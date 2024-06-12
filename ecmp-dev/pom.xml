@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.api</groupId>
 	<artifactId>ecmp-dev</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2.10</version>
 	<name>ecmp-dev</name>
 	<description>API for ECMP application</description>
 	<properties>
@@ -107,6 +107,12 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
