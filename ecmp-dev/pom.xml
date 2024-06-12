@@ -128,19 +128,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<properties>
-				<activatedProperties>dev</activatedProperties>
-			</properties>
-		</profile>
-		<profile>
-			<id>test</id>
-			<properties>
-				<activatedProperties>test</activatedProperties>
-			</properties>
-		</profile>
-	</profiles>
 
 </project>

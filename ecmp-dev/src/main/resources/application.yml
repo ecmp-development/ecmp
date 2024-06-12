@@ -1,5 +1,27 @@
 spring:
   application:
     name: "ecmp-dev"
+  datasource:
+    url: jdbc:postgresql://<database_name>:<database_port>/<database_table_name>
+    username: <database_user>
+    password: <database_password>
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+        format_sql: true
+    show-sql: true
+    database: postgresql
   profiles:
-    active: @activatedProperties@
+    active: <active_profile>
+application:
+  security:
+    jwt:
+      secret-key: <jwt_key_signature>
+
+cors:
+  allowedOrigins: <allowed_origins>

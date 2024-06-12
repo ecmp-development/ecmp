@@ -1,6 +1,9 @@
 spring:
   application:
     name: "ecmp-dev"
+  config:
+    activate:
+      on-profile: "dev"
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: developer
@@ -14,7 +17,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: public
         format_sql: true
-    show-sql: true
+    show-sql: false
     database: postgresql
 application:
   security:
