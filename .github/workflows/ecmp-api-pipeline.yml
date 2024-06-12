@@ -99,7 +99,7 @@ jobs:
           sed -i 's/<database_user>/${{ secrets.POSTGRES_DB_USER }}/g' ${{ env.PROPS_DIR }}
           sed -i 's/<database_password>/${{ secrets.POSTGRES_DB_PASS }}/g' ${{ env.PROPS_DIR }}
           sed -i 's/<jwt_key_signature>/${{ secrets.JWT_KEY }}/g' ${{ env.PROPS_DIR }}
-          sed -i 's/<allowed_origins>/${{ secrets.ALLOWED_ORIGINS }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's@<allowed_origins>@${{ secrets.ALLOWED_ORIGINS }}@g' ${{ env.PROPS_DIR }}
 
       - name: Setup JDK
         uses: actions/setup-java@v4
@@ -134,7 +134,7 @@ jobs:
           sed -i 's/<database_user>/${{ secrets.POSTGRES_DB_USER }}/g' ${{ env.PROPS_DIR }}
           sed -i 's/<database_password>/${{ secrets.POSTGRES_DB_PASS }}/g' ${{ env.PROPS_DIR }}
           sed -i 's/<jwt_key_signature>/${{ secrets.JWT_KEY }}/g' ${{ env.PROPS_DIR }}
-          sed -i 's/<allowed_origins>/${{ secrets.ALLOWED_ORIGINS }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's@<allowed_origins>@${{ secrets.ALLOWED_ORIGINS }}@g' ${{ env.PROPS_DIR }}
 
       - name: Setup JDK
         uses: actions/setup-java@v4
@@ -169,7 +169,7 @@ jobs:
           sed -i 's/<database_user>/${{ secrets.POSTGRES_DB_USER }}/g' ${{ env.PROPS_DIR }}
           sed -i 's/<database_password>/${{ secrets.POSTGRES_DB_PASS }}/g' ${{ env.PROPS_DIR }}
           sed -i 's/<jwt_key_signature>/${{ secrets.JWT_KEY }}/g' ${{ env.PROPS_DIR }}
-          sed -i 's/<allowed_origins>/${{ secrets.ALLOWED_ORIGINS }}/g' ${{ env.PROPS_DIR }}
+          sed -i 's@<allowed_origins>@${{ secrets.ALLOWED_ORIGINS }}@g' ${{ env.PROPS_DIR }}
 
       - name: Setup JDK
         uses: actions/setup-java@v4
