@@ -1,9 +1,6 @@
 spring:
   application:
     name: "ecmp-dev"
-  config:
-    activate:
-      on-profile: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: developer
@@ -19,10 +16,12 @@ spring:
         format_sql: true
     show-sql: false
     database: postgresql
+  profiles:
+    active: test
 application:
   security:
     jwt:
-      secret-key: MTIxM1dXQTEyM1dEUTUxNjc1QVdEQVcxMjc4NTFBV0JOVVdBSDE3MjQ1V0FIRk4xMjRJV0lONTY3MVdHUU1WTDEyMw==
+      secret-key: 1213WWA123WDQ51675AWDAW127851AWBNUWAH17245WAHFN124IWIN5671WGQMVL123
 
 cors:
   allowedOrigins: http://localhost/,http://localhost:4200/
