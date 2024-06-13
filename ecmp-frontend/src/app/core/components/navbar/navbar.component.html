@@ -1,0 +1,15 @@
+<nav class="navbar" [ngClass]="{'scrolled': isScrolled, 'hovered': isHovered}" (mouseover)="onHover(true)" (mouseleave)="onHover(false)">
+  <ul class="nav-left">
+    <li><a href="#">Home</a></li>
+    <li><a href="products">Products</a></li>
+    <li><a href="about-us">About Us</a></li>
+  </ul>
+  <div class="logo" [ngClass]="{'scrolled': isScrolled}">
+    <img *ngIf="!isScrolled && !isHovered" src="assets/logos/ecmplogo_text_white.png" alt="Logo">
+    <img *ngIf="isScrolled || isHovered" src="assets/logos/ecmplogo_text_colorway.png" alt="Scrolled Logo">
+  </div>
+  <ul class="nav-right">
+    <li><a href="#"><img style="height: 32px; vertical-align: middle;" src="assets/logos/ecmplogo_icon.png"></a></li>
+    <li><a href="#">Account</a></li>
+  </ul>
+</nav>

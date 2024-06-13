@@ -1,0 +1,7 @@
+<p class="headline">Benefits of ecmp</p>
+  <div class="benefit-cards">
+    <app-benefit-card *ngFor="let card of cardsData"
+                      [backgroundUrl]="card.backgroundUrl"
+                      [title]="card.title"
+                      [description]="card.description"/>
+  </div>

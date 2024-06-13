@@ -1,0 +1,75 @@
+.headline {
+  flex: 0 0 auto;
+  background: -webkit-linear-gradient(#f6d963, #f32d00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+  font-size: calc(1rem + 24px);
+}
+
+.beta-content {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.description {
+  flex: 0 0 auto;
+}
+
+.beta-video {
+  position: relative;
+  max-width: 750px;
+  height: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  color: white;
+}
+
+.video-primary {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.beta-video-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  pointer-events: auto;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.beta-video-content-text{
+  font-weight: bold;
+  font-size: calc(1rem + 24px);
+}
+.custom-polish {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+  min-width: 84px;
+  border-radius: 25px;
+  justify-content: center;
+}
+
+.custom-polish:hover {
+  color: white;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
+}
+.beta-video-content-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
