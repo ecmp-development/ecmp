@@ -4,11 +4,11 @@ import com.api.ecmpdev.configs.exceptions.UserEmailNotFoundException;
 import com.api.ecmpdev.configs.exceptions.UserIdNotFoundException;
 import com.api.ecmpdev.dtos.RequestChangeEmail;
 import com.api.ecmpdev.dtos.RequestChangePassword;
-import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
 import com.api.ecmpdev.dtos.auth.RequestAuthEmail;
 import com.api.ecmpdev.dtos.auth.RequestAuthId;
 import com.api.ecmpdev.dtos.mappers.ResponseUserMapper;
+import com.api.ecmpdev.models.Order;
 import com.api.ecmpdev.models.User;
 import com.api.ecmpdev.repositories.TokenRepository;
 import com.api.ecmpdev.repositories.UserRepository;
@@ -62,32 +62,9 @@ public class UserService {
                 .orElseThrow(() -> new UserEmailNotFoundException(email));
     }
 
-    public ResponseEntity<String> createNewUser(RequestCreateUser user) {
-        if (
-                !user.getName().isEmpty()
-                        && !user.getFirstname().isEmpty()
-                        && !user.getEmail().isEmpty()
-                        && !user.getPassword().isEmpty()
-                        && !user.getRole().name().isEmpty()
-        ) {
-
-            if (!userRepository.existsByEmail(user.getEmail())) {
-
-                userRepository.save(
-                        User.builder()
-                                .name(user.getName())
-                                .firstname(user.getFirstname())
-                                .email(user.getEmail())
-                                .password(encoder.encode(user.getPassword()))
-                                .role(user.getRole())
-                                .build()
-                );
-
-                return new ResponseEntity<>("Created user", HttpStatus.CREATED);
-
-            } else return new ResponseEntity<>("User already exists with email: " + user.getEmail(), HttpStatus.CONFLICT);
-
-        } else return new ResponseEntity<>("Invalid values", HttpStatus.BAD_REQUEST);
+    public List<Order> getOrdersOfUsers(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserEmailNotFoundException(email)).getOrder();
     }
 
     @Transactional

@@ -6,6 +6,7 @@ import com.api.ecmpdev.dtos.auth.RequestAuthId;
 import com.api.ecmpdev.dtos.RequestChangePassword;
 import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
+import com.api.ecmpdev.models.Order;
 import com.api.ecmpdev.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -38,9 +39,9 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody RequestCreateUser payload) {
-        return userService.createNewUser(payload);
+    @GetMapping("/order")
+    public List<Order> getUserOrders(@RequestParam String email) {
+        return userService.getOrdersOfUsers(email);
     }
 
     @PutMapping("/update/email")

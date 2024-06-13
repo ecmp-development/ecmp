@@ -5,7 +5,6 @@ import com.api.ecmpdev.configs.exceptions.UserEmailNotFoundException;
 import com.api.ecmpdev.configs.exceptions.UserIdNotFoundException;
 import com.api.ecmpdev.dtos.RequestChangeEmail;
 import com.api.ecmpdev.dtos.RequestChangePassword;
-import com.api.ecmpdev.dtos.RequestCreateUser;
 import com.api.ecmpdev.dtos.ResponseUser;
 import com.api.ecmpdev.dtos.auth.RequestAuthEmail;
 import com.api.ecmpdev.dtos.auth.RequestAuthId;
@@ -148,69 +147,6 @@ class UserServiceTest extends AbstractContainerBaseTest {
             Exception exception = assertThrows(UserEmailNotFoundException.class, () -> userService.getUserByEmail(email));
             assertEquals("User with email does not exist. Email: " + email, exception.getMessage());
         }
-    }
-
-    @Nested
-    @DisplayName("POST User Test")
-    class postUser {
-
-        @Test
-        void shouldCreateUserWithGivenData() {
-            RequestCreateUser createUser = RequestCreateUser.builder()
-                    .name("testUser1")
-                    .firstname("test1")
-                    .email("test1@mail.test")
-                    .password("123123")
-                    .role(Roles.CUSTOMER)
-                    .build();
-
-            ResponseEntity<String> expectedStatus = new ResponseEntity<>("Created user", HttpStatus.CREATED);
-            ResponseEntity<String> actualStatus = userService.createNewUser(createUser);
-
-            boolean expected = userRepository.existsByEmail(createUser.getEmail());
-
-            assertEquals(expectedStatus, actualStatus);
-            assertTrue(expected);
-        }
-
-        @Test
-        void shouldReturnBadRequestWhenRequestDataEmpty() {
-            RequestCreateUser createUser = RequestCreateUser.builder()
-                    .name("")
-                    .firstname("test1")
-                    .email("test1@mail.test")
-                    .password("123123")
-                    .role(Roles.CUSTOMER)
-                    .build();
-
-            ResponseEntity<String> expectedStatus = new ResponseEntity<>("Invalid values", HttpStatus.BAD_REQUEST);
-            ResponseEntity<String> actualStatus = userService.createNewUser(createUser);
-
-            boolean expected = userRepository.existsByEmail(createUser.getEmail());
-
-            assertEquals(expectedStatus, actualStatus);
-            assertFalse(expected);
-        }
-
-        @Test
-        void shouldReturnConflictWhenEmailExists() {
-            RequestCreateUser createUser = RequestCreateUser.builder()
-                    .name("testUser1")
-                    .firstname("test1")
-                    .email("customerTest@mail.test")
-                    .password("123123")
-                    .role(Roles.CUSTOMER)
-                    .build();
-
-            ResponseEntity<String> expectedStatus = new ResponseEntity<>("User already exists with email: " + createUser.getEmail(), HttpStatus.CONFLICT);
-            ResponseEntity<String> actualStatus = userService.createNewUser(createUser);
-
-            boolean expected = encoder.matches(createUser.getPassword(), userRepository.findByEmail(createUser.getEmail()).orElseThrow().getPassword());
-
-            assertEquals(expectedStatus, actualStatus);
-            assertFalse(expected);
-        }
-
     }
 
     @Nested
