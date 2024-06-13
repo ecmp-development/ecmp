@@ -1,0 +1,15 @@
+<div class="video-container">
+  <video id="video" loop muted autoplay class="home-video-primary" oncanplay="this.play()" onloadedmetadata="this.muted = true">
+    <source src="assets/videos/videoplayback.webm" type="video/webm">
+  </video>
+  <div class="video-overlay d-flex justify-content-center align-items-center">
+    <div class="text-center text-white">
+      <p class="overlay-text">ECMP LIVE DEMO</p>
+      <form>
+        <p>Experience our Shop by clicking around</p>
+        <button (click)="navigateToProducts()" type="button" class="btn btn-primary">View Products</button>
+      </form>
+    </div>
+  </div>
+</div>
+

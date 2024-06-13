@@ -1,0 +1,14 @@
+.headline {
+  background: -webkit-linear-gradient(#0080ff, #7800ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+  font-size: calc(1rem + 24px);
+}
+.benefit-cards{
+  padding-top: 25px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
