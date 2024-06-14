@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import {NgIf} from "@angular/common";
+import {NgIf, NgOptimizedImage} from "@angular/common";
 import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar-colorful',
   standalone: true,
-    imports: [
-        NgIf
-    ],
+  imports: [
+    NgIf,
+    NgOptimizedImage
+  ],
   templateUrl: './navbar-colorful.component.html',
   styleUrl: './navbar-colorful.component.css'
 })

@@ -1,0 +1,17 @@
+.headline {
+  background: -webkit-linear-gradient(#2bb2d0, #7500f3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: normal;
+  font-size: calc(1rem + 12px);
+}
+.benefits-head-zone{
+  max-width: 850px;
+  height: 250px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 auto;
+}

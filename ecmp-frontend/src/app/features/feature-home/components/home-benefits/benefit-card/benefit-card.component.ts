@@ -1,9 +1,12 @@
 import {Component, Input} from '@angular/core';
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-benefit-card',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './benefit-card.component.html',
   styleUrl: './benefit-card.component.css'
 })
