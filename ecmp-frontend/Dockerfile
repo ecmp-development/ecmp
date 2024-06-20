@@ -1,6 +1,7 @@
 FROM node:21-alpine as node
 WORKDIR /app
 COPY . .
+RUN npm install -g @angular/cli
 RUN npm install -g npm
 RUN npm run build --prod
 
