@@ -1,27 +1,24 @@
-# EcmpFrontend
+# ECMP Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
+Our frontend represents our creativity as our goal direction in which ECMP wants to go.
+## Chapters
 
-## Development server
+1. [Requirements](#Requirements)
+2. [Used Technology](#Tech)
+3. [Informations](#More)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Requirements
 
-## Code scaffolding
+Make sure to get following things before setting up the application:
+- Node.js and npm (Node Package Manager)
+- Git LFS (Large File System)
+- Docker
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+If the following requirements are not installed yet, please install them. Missing requirements can cause errors.
 
-## Build
+## Used Technology
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+As a Javascript-Framework our team decided to go for Angular. For our styling we use bootstrap and custom components.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Informations
+For questions or bugs in frontend please contact @maxthnd. If you have ideas about making our sites more attractive please send us a mail.

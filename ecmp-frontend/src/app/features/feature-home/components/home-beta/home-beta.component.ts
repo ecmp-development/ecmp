@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {BenefitCardComponent} from "../home-benefits/benefit-card/benefit-card.component";
+import {BenefitCardComponent} from "../../../../core/components/cards/benefit-card/benefit-card.component";
 import {NgForOf} from "@angular/common";
 
 @Component({

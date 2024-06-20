@@ -58,7 +58,6 @@
 .custom-polish {
   transition: color 0.3s ease, text-shadow 0.3s ease;
   min-width: 84px;
-  border-radius: 25px;
   justify-content: center;
 }
 
