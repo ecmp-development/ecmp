@@ -3,7 +3,6 @@ WORKDIR /app
 COPY . .
 RUN npm i -g @angular/cli@17
 RUN npm i -g npm
-RUN npm i
 RUN npm run build --prod
 
 FROM nginx:alpine
