@@ -1,4 +1,10 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/ECMP-API-DEV
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
   application:
     name: "ecmp-dev"
   datasource:
@@ -19,10 +25,5 @@ spring:
     generate-ddl: true
   profiles:
     active: <active_profile>
-application:
-  security:
-    jwt:
-      secret-key: <jwt_key_signature>
-
 cors:
   allowedOrigins: <allowed_origins>

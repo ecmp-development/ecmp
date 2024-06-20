@@ -10,7 +10,6 @@ import com.api.ecmpdev.dtos.auth.RequestAuthId;
 import com.api.ecmpdev.dtos.mappers.ResponseUserMapper;
 import com.api.ecmpdev.models.Order;
 import com.api.ecmpdev.models.User;
-import com.api.ecmpdev.repositories.TokenRepository;
 import com.api.ecmpdev.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,18 +26,15 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final TokenRepository tokenRepository;
     private final PasswordEncoder encoder;
     private final ResponseUserMapper responseUserMapper;
 
     @Autowired
     public UserService(
             UserRepository userRepository,
-            TokenRepository tokenRepository,
             PasswordEncoder encoder,
             ResponseUserMapper responseUserMapper) {
         this.userRepository = userRepository;
-        this.tokenRepository = tokenRepository;
         this.encoder = encoder;
         this.responseUserMapper = responseUserMapper;
     }
@@ -99,7 +95,6 @@ public class UserService {
                 .orElseThrow(() -> new UserIdNotFoundException(userData.getId()));
 
         if (encoder.matches(userData.getPassword(), user.getPassword())) {
-            tokenRepository.deleteAllInBatch(tokenRepository.findAllTokensByUser(user.getId()));
             userRepository.delete(user);
             return new ResponseEntity<>("Deleted user with id: " + userData.getId(), HttpStatus.OK);
 
@@ -112,7 +107,6 @@ public class UserService {
                 .orElseThrow(() -> new UserEmailNotFoundException(userData.getEmail()));
 
         if(encoder.matches(userData.getPassword(), user.getPassword())) {
-            tokenRepository.deleteAllInBatch(tokenRepository.findAllTokensByUser(user.getId()));
             userRepository.delete(user);
             return new ResponseEntity<>("Deleted user with email: " + userData.getEmail(), HttpStatus.OK);
 
