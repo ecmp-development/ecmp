@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet, Event, NavigationEnd } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NavbarComponent} from "./core/components/navbar/navbar.component";
 import {BottombarComponent} from "./core/components/bottombar/bottombar.component";
@@ -13,4 +13,11 @@ import {BottombarComponent} from "./core/components/bottombar/bottombar.componen
 })
 export class AppComponent {
   title = 'ecmp-frontend';
+  constructor(private router: Router) {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
+  }
 }

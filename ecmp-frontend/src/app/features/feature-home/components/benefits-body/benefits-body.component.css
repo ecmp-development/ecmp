@@ -1,0 +1,7 @@
+.benefits-body-zone{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
