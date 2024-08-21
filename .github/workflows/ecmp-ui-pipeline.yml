@@ -66,7 +66,7 @@ jobs:
         with:
           node-version: '22'
           npm: '10'
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: ${{ secrets.JFROG_URL }}
 
       - name: Checkout code
         uses: actions/checkout@v4
