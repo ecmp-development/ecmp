@@ -61,21 +61,20 @@ jobs:
     name: Build FE Docker Image
     runs-on: ubuntu-latest
     steps:
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          registry-url: 'https://npm.pkg.github.com/'
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          registry-url: 'https://registry.npmjs.org'
-
       - name: Install dependencies
         run: |
           cd ecmp-frontend
-          echo ${{ secrets.NPM_AUTH_TOKEN }}
           npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
