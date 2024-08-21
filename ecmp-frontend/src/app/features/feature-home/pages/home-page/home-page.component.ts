@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {NgOptimizedImage} from "@angular/common";
-import {Router} from "@angular/router";
 import {HomeVideoComponent} from "../../components/home-video/home-video.component";
 import {HomeBenefitsComponent} from "../../components/home-benefits/home-benefits.component";
 import {HomeBetaComponent} from "../../components/home-beta/home-beta.component";
@@ -24,5 +23,8 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.loginService.getTokenLogin("ecmpuser1", "123")
+      .then(function (result) {
+        localStorage.setItem("access_token", result)
+      })
   }
 }

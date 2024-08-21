@@ -61,10 +61,26 @@ jobs:
     name: Build FE Docker Image
     runs-on: ubuntu-latest
     steps:
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          npm: '10'
+          registry-url: ${{ secrets.JFROG_URL }}
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          cd ecmp-frontend
+          npm ci
+          npm i -g @angular/cli
+          npm run build --prod
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
       - name: Login to Dockerhub
         uses: docker/login-action@v3
@@ -74,7 +90,6 @@ jobs:
 
       - name: Build & Push to Dockerhub
         uses: docker/build-push-action@v5
-        run: npm ci
         with:
           context: ecmp-frontend
           file: ecmp-frontend/Dockerfile
