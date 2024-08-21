@@ -1,6 +1,7 @@
 FROM node:21-alpine as node
 WORKDIR /app
 COPY . .
+RUN npm i @angular/cli
 RUN npm run build --prod
 
 FROM nginx:alpine
