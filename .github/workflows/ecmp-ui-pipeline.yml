@@ -78,6 +78,7 @@ jobs:
           cd ecmp-frontend
           npm ci
           npm i -g @angular/cli
+          npm run build --prod
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
