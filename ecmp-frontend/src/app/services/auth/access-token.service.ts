@@ -1,17 +1,16 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {requestConfig} from "../../app.config";
-import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccessTokenService {
 
-  constructor() { }
+  constructor() {
+  }
 
-
-  getTokenLogin(username: string, password: string) {
-    fetch(requestConfig.auth.kc_auth_token, {
+  async getTokenLogin(username: string, password: string): Promise<string> {
+    return await fetch(requestConfig.auth.kc_auth_token, {
       method: 'POST',
       headers: {
         "Content-Type": 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -24,14 +23,18 @@ export class AccessTokenService {
       })
     }).then(res => {
       if (res.ok) return res.json();
-      else return { refresh_token: 'error' };
+      else return 'error';
     })
       .then(data => {
-        if (data.access_token === 'error') {
-          console.log("Error in parsing Token")
+        if (data === 'error') {
+          return "Error in parsing Token"
         } else {
-          localStorage.setItem('refresh_token', data.refresh_token);
+          return data.access_token;
         }
+      })
+      .catch(e => {
+        console.log("Failed to get Token " + e)
+        return e;
       });
   }
 }

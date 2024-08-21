@@ -60,7 +60,8 @@ public class UserService {
 
     public List<Order> getOrdersOfUsers(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserEmailNotFoundException(email)).getOrder();
+                .orElseThrow(() -> new UserEmailNotFoundException(email))
+                .getOrder();
     }
 
     @Transactional

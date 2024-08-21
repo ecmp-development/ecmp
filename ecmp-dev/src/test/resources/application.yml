@@ -1,10 +1,10 @@
 spring:
   security:
     oauth2:
-        resourceserver:
-          jwt:
-            issuer-uri: http://localhost:8081/realms/ECMP-API-DEV
-            jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/ECMP-API-DEV
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
   application:
     name: "ecmp-dev"
   datasource:
