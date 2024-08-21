@@ -70,8 +70,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          
-      - run: npm ci
+
+      - run: |
+          cd ecmp-frontend
+          npm ci
 
       - name: Login to Dockerhub
         uses: docker/login-action@v3
