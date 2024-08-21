@@ -75,6 +75,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd ecmp-frontend
+          echo ${{ secrets.NPM_AUTH_TOKEN }}
           npm ci
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
