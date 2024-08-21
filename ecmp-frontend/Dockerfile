@@ -1,6 +1,7 @@
 FROM node:21-alpine as node
 WORKDIR /app
 COPY . .
+COPY package*.json ./
 RUN npm install
 RUN npm run build --prod
 
