@@ -7,6 +7,7 @@ import com.api.ecmpdev.models.Item;
 import com.api.ecmpdev.services.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,11 @@ public class ItemController {
     @PostMapping("/create")
     public HttpStatusCode createItem(@RequestBody RequestCreateItem payload) {
         return itemService.createItem(payload);
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<String> updateItem(@RequestBody Item payload) {
+        return itemService.updateItem(payload);
     }
 
     @DeleteMapping("/remove/{id}")
