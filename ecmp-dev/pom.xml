@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.api</groupId>
-	<artifactId>ecmp-dev</artifactId>
+	<artifactId>ecmp-api</artifactId>
 	<version>0.2.10</version>
-	<name>ecmp-dev</name>
+	<name>ecmp-api</name>
 	<description>API for ECMP application</description>
 	<properties>
 		<java.version>17</java.version>
