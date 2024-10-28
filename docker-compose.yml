@@ -35,7 +35,7 @@ services:
     container_name: ecmp-frontend
     build:
       context: ecmp-frontend/.
-      dockerfile: Dockerfilev1
+      dockerfile: Dockerfile
     image: ecmp-frontend:latest
     ports:
       - "80:80"
