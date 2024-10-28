@@ -8,7 +8,7 @@ on:
       - pipeline/**
       - testing/**
     paths:
-      - ecmp-dev/**
+      - ecmp-api/**
       - .github/workflows/**
       - 'docker-compose.yml'
   workflow_dispatch:
@@ -74,7 +74,7 @@ jobs:
 
       - name: Compile Project
         run: |
-          cd ecmp-dev
+          cd ecmp-api
           ./mvnw clean compile
 
   unit-tests:
@@ -109,7 +109,7 @@ jobs:
 
       - name: Running unit tests
         run: |
-          cd ecmp-dev
+          cd ecmp-api
           ./mvnw clean test
 
   build:
@@ -144,7 +144,7 @@ jobs:
 
       - name: Build project
         run: |
-          cd ecmp-dev
+          cd ecmp-api
           ./mvnw clean package
 
   build-image:
@@ -179,7 +179,7 @@ jobs:
 
       - name: Build project
         run: |
-          cd ecmp-dev
+          cd ecmp-api
           ./mvnw clean package
 
       - name: Login to Dockerhub
@@ -191,7 +191,7 @@ jobs:
       - name: Build & Push to Dockerhub
         uses: docker/build-push-action@v5
         with:
-          context: ecmp-dev
-          file: ecmp-dev/Dockerfile
+          context: ecmp-api
+          file: ecmp-api/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ecmp-api:latest

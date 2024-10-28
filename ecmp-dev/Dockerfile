@@ -1,6 +1,6 @@
 FROM amazoncorretto:17
 
-ARG JAR_FILE="ecmp-dev-*.jar"
+ARG JAR_FILE="ecmp-api-*.jar"
 
 COPY target/${JAR_FILE} /app/api.jar
 
