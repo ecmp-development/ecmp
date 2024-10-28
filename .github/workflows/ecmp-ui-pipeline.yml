@@ -57,7 +57,7 @@ jobs:
           category: "/language:${{matrix.language}}"
 
   build-image:
-    environment: ecmp-dev-stage
+    environment: ecmp-api-stage
     name: Build FE Docker Image
     runs-on: ubuntu-latest
     steps:
