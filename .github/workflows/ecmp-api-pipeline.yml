@@ -57,7 +57,7 @@ jobs:
           category: "/language:${{matrix.language}}"
 
   compile:
-    environment: ecmp-api-stage
+    environment: ecmp-dev-stage
     runs-on: ubuntu-latest
     name: compile project
     steps:
@@ -78,7 +78,7 @@ jobs:
           ./mvnw clean compile
 
   unit-tests:
-    environment: ecmp-api-stage
+    environment: ecmp-dev-stage
     runs-on: ubuntu-latest
     name: Unit tests
     steps:
@@ -113,7 +113,7 @@ jobs:
           ./mvnw clean test
 
   build:
-    environment: ecmp-api-stage
+    environment: ecmp-dev-stage
     runs-on: ubuntu-latest
     name: build project
     needs: [compile, unit-tests]
@@ -148,7 +148,7 @@ jobs:
           ./mvnw clean package
 
   build-image:
-    environment: ecmp-api-stage
+    environment: ecmp-dev-stage
     name: Build Docker image
     runs-on: ubuntu-latest
     needs: [build]
