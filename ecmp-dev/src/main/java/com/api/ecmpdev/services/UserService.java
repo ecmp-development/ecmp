@@ -107,7 +107,7 @@ public class UserService {
         User user = userRepository.findByEmail(userData.getEmail())
                 .orElseThrow(() -> new UserEmailNotFoundException(userData.getEmail()));
 
-        if(encoder.matches(userData.getPassword(), user.getPassword())) {
+        if (encoder.matches(userData.getPassword(), user.getPassword())) {
             userRepository.delete(user);
             return new ResponseEntity<>("Deleted user with email: " + userData.getEmail(), HttpStatus.OK);
 

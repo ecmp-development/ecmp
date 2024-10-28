@@ -65,7 +65,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          npm: '10'
           registry-url: ${{ secrets.JFROG_URL }}
 
       - name: Checkout code
